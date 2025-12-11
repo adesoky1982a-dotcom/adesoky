@@ -5,11 +5,19 @@
   box-sizing: border-box;
 }
 
+:root {
+  --blue-main: #004785;      /* Bechtel-ish */
+  --blue-light: #2f8bff;
+  --bg-page: #edf1f7;
+  --text-main: #152232;
+  --text-muted: #4b586b;
+}
+
 body {
   margin: 0;
   font-family: system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
-  color: #152232;
-  background: #f3f5f9;
+  color: var(--text-main);
+  background: var(--bg-page);
 }
 
 /* ===== NAVBAR ===== */
@@ -21,7 +29,13 @@ body {
   background: rgba(255, 255, 255, 0.96);
   border-bottom: 1px solid #d7dde8;
   z-index: 1000;
-  backdrop-filter: blur(8px);
+  backdrop-filter: blur(10px);
+  transition: box-shadow 0.25s ease, background 0.25s ease;
+}
+
+.top-nav.elevated {
+  box-shadow: 0 10px 30px rgba(5, 16, 35, 0.23);
+  background: rgba(255, 255, 255, 0.99);
 }
 
 .nav-inner {
@@ -44,15 +58,15 @@ body {
 .brand-mark {
   width: 36px;
   height: 36px;
-  border-radius: 6px;
-  background: #004785;
+  border-radius: 8px;
+  background: var(--blue-main);
   color: #ffffff;
   display: flex;
   align-items: center;
   justify-content: center;
   font-weight: 700;
   font-size: 16px;
-  box-shadow: 0 8px 18px rgba(0, 71, 133, 0.3);
+  box-shadow: 0 8px 20px rgba(0, 71, 133, 0.5);
 }
 
 .brand-text {
@@ -82,24 +96,40 @@ body {
 }
 
 .nav-links a:hover {
-  color: #004785;
+  color: var(--blue-main);
 }
 
 /* ===== HERO ===== */
 .hero {
   position: relative;
-  padding: 110px 20px 80px;
+  padding: 115px 20px 80px;
   overflow: hidden;
+  background: #f3f6fb;
 }
 
-.hero-bg-layer {
+.hero::before {
+  content: "";
   position: absolute;
-  inset: 0;
-  background:
-    radial-gradient(circle at 10% 20%, rgba(0, 82, 163, 0.25), transparent 55%),
-    radial-gradient(circle at 80% 0%, rgba(0, 71, 133, 0.9), transparent 60%),
-    linear-gradient(135deg, #07101f 0%, #0c1b30 40%, #f3f5f9 100%);
-  z-index: -2;
+  right: -180px;
+  top: -120px;
+  width: 520px;
+  height: 520px;
+  background: radial-gradient(circle at 20% 20%, #2f8bff, transparent 70%);
+  opacity: 0.18;
+  pointer-events: none;
+}
+
+.hero::after {
+  content: "";
+  position: absolute;
+  left: -40px;
+  bottom: -140px;
+  width: 420px;
+  height: 260px;
+  background: linear-gradient(135deg, #004785, #2f8bff);
+  opacity: 0.12;
+  transform: skewX(-18deg);
+  pointer-events: none;
 }
 
 .hero-container {
@@ -109,7 +139,6 @@ body {
   grid-template-columns: minmax(0, 3.1fr) minmax(0, 2.3fr);
   gap: 40px;
   align-items: center;
-  color: #ffffff;
 }
 
 .hero-left {
@@ -120,7 +149,7 @@ body {
   text-transform: uppercase;
   letter-spacing: 0.16em;
   font-size: 11px;
-  color: #9db9ff;
+  color: #7ea1e8;
   margin-bottom: 12px;
 }
 
@@ -135,7 +164,7 @@ body {
   font-size: 15px;
   line-height: 1.8;
   max-width: 560px;
-  color: #d5def0;
+  color: #5a6881;
 }
 
 .hero-actions {
@@ -147,7 +176,7 @@ body {
 
 .btn {
   border-radius: 999px;
-  padding: 9px 20px;
+  padding: 10px 22px;
   font-size: 13px;
   font-weight: 600;
   text-decoration: none;
@@ -156,23 +185,25 @@ body {
   justify-content: center;
   cursor: pointer;
   border: 0;
+  transition: transform 0.18s ease, box-shadow 0.18s ease, background 0.18s ease,
+    color 0.18s ease, border-color 0.18s ease;
 }
 
 .primary {
-  background: linear-gradient(135deg, #2f8bff, #00a2ff);
+  background: linear-gradient(135deg, var(--blue-light), #00a2ff);
   color: #ffffff;
-  box-shadow: 0 12px 24px rgba(0, 138, 255, 0.45);
+  box-shadow: 0 12px 26px rgba(0, 138, 255, 0.45);
 }
 
 .ghost {
-  border: 1px solid #7fa4ff;
-  color: #e4ecff;
-  background: transparent;
+  border: 1px solid #8aa7e5;
+  color: #274163;
+  background: #ffffff;
 }
 
 .btn:hover {
-  transform: translateY(-1px);
-  filter: brightness(1.04);
+  transform: translateY(-2px);
+  box-shadow: 0 16px 32px rgba(8, 40, 90, 0.26);
 }
 
 .hero-stats {
@@ -183,23 +214,25 @@ body {
 
 .stat {
   min-width: 110px;
-  background: rgba(6, 18, 37, 0.85);
-  border-radius: 8px;
+  background: #ffffff;
+  border-radius: 12px;
   padding: 10px 14px;
-  border: 1px solid rgba(126, 161, 212, 0.4);
+  border: 1px solid #dde4f0;
+  box-shadow: 0 10px 20px rgba(4, 13, 32, 0.08);
 }
 
 .stat-number {
   display: block;
   font-size: 20px;
   font-weight: 700;
+  color: var(--blue-main);
 }
 
 .stat-label {
   font-size: 10px;
   text-transform: uppercase;
   letter-spacing: 0.14em;
-  opacity: 0.85;
+  color: #7a879b;
 }
 
 /* HERO RIGHT CARD */
@@ -209,15 +242,22 @@ body {
 
 .hero-card {
   background: #ffffff;
-  border-radius: 18px;
-  box-shadow: 0 22px 60px rgba(0, 20, 51, 0.38);
+  border-radius: 22px;
+  box-shadow: 0 30px 80px rgba(0, 20, 51, 0.32);
   overflow: hidden;
   max-width: 360px;
   margin-left: auto;
+  transform-origin: center;
+  transition: transform 0.3s ease, box-shadow 0.3s ease;
+}
+
+.hero-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 40px 90px rgba(0, 20, 51, 0.45);
 }
 
 .hero-photo-wrap {
-  background: linear-gradient(135deg, #004785, #0f5fb6);
+  background: radial-gradient(circle at 20% 0%, #2f8bff, #004785);
   padding: 18px 20px 14px;
   display: flex;
   justify-content: center;
@@ -225,9 +265,10 @@ body {
 
 .hero-photo {
   max-width: 220px;
-  border-radius: 12px;
+  border-radius: 14px;
   border: 3px solid #ffffff;
   background: #ffffff;
+  box-shadow: 0 16px 30px rgba(0, 0, 0, 0.25);
 }
 
 .hero-card-body {
@@ -244,7 +285,7 @@ body {
   margin: 0 0 10px;
   font-size: 13px;
   font-weight: 600;
-  color: #004785;
+  color: var(--blue-main);
   text-transform: uppercase;
   letter-spacing: 0.12em;
 }
@@ -252,7 +293,7 @@ body {
 .hero-summary {
   margin: 0 0 10px;
   font-size: 13px;
-  color: #4b586b;
+  color: var(--text-muted);
   line-height: 1.8;
 }
 
@@ -260,10 +301,10 @@ body {
   margin: 0;
   padding-left: 18px;
   font-size: 13px;
-  color: #4b586b;
+  color: var(--text-muted);
 }
 
-/* ===== SECTIONS ===== */
+/* ===== GLOBAL SECTIONS ===== */
 .section {
   padding: 68px 20px;
 }
@@ -280,7 +321,7 @@ body {
 .section-header h2 {
   margin: 0;
   font-size: 22px;
-  color: #152232;
+  color: var(--text-main);
 }
 
 .section-header p {
@@ -291,7 +332,7 @@ body {
 
 .section-header {
   margin-bottom: 26px;
-  border-left: 4px solid #004785;
+  border-left: 4px solid var(--blue-main);
   padding-left: 14px;
 }
 
@@ -305,12 +346,12 @@ body {
 .grid-2 p {
   font-size: 14px;
   line-height: 1.9;
-  color: #404c63;
+  color: var(--text-muted);
 }
 
 .key-points {
   background: #f5f7fb;
-  border-radius: 10px;
+  border-radius: 12px;
   border: 1px solid #dde4f0;
   padding: 16px 18px 18px;
 }
@@ -324,7 +365,7 @@ body {
   margin: 0;
   padding-left: 18px;
   font-size: 13px;
-  color: #404c63;
+  color: var(--text-muted);
 }
 
 /* CARDS GRID */
@@ -340,6 +381,12 @@ body {
   border: 1px solid #dde4f0;
   padding: 16px 18px 18px;
   box-shadow: 0 6px 14px rgba(5, 22, 52, 0.05);
+  transition: transform 0.2s ease, box-shadow 0.2s ease;
+}
+
+.card:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 14px 28px rgba(5, 22, 52, 0.16);
 }
 
 .card h3 {
@@ -351,7 +398,7 @@ body {
 .card p {
   margin: 0;
   font-size: 14px;
-  color: #404c63;
+  color: var(--text-muted);
   line-height: 1.8;
 }
 
@@ -387,7 +434,7 @@ body {
   width: 11px;
   height: 11px;
   border-radius: 50%;
-  background: #004785;
+  background: var(--blue-main);
   box-shadow: 0 0 0 4px rgba(0, 71, 133, 0.22);
 }
 
@@ -408,7 +455,7 @@ body {
 .timeline-content p {
   margin: 0;
   font-size: 14px;
-  color: #404c63;
+  color: var(--text-muted);
   line-height: 1.9;
 }
 
@@ -462,7 +509,7 @@ body {
 }
 
 .accent {
-  color: #004785;
+  color: var(--blue-main);
   font-weight: 600;
 }
 
@@ -473,7 +520,30 @@ body {
   text-align: center;
   padding: 18px;
   font-size: 12px;
-  margin-top: 0;
+}
+
+/* ===== ANIMATIONS / REVEAL ===== */
+.reveal {
+  opacity: 0;
+  transform: translateY(26px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+
+.reveal.visible {
+  opacity: 1;
+  transform: translateY(0);
+}
+
+.reveal.delay-1 {
+  transition-delay: 0.15s;
+}
+
+.reveal.delay-2 {
+  transition-delay: 0.3s;
+}
+
+.reveal.delay-3 {
+  transition-delay: 0.45s;
 }
 
 /* ===== RESPONSIVE ===== */
