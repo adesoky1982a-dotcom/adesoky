@@ -1,1 +1,10 @@
-console.log('ok');
+// Smooth scroll for navbar links
+document.querySelectorAll('a[href^="#"]').forEach(link => {
+  link.addEventListener("click", e => {
+    e.preventDefault();
+    const target = document.querySelector(link.getAttribute("href"));
+    if (target) {
+      target.scrollIntoView({ behavior: "smooth" });
+    }
+  });
+});
